@@ -358,9 +358,9 @@ static FLASH_INFO: RegexMap<FlashInfo> = RegexMap::new(&[
     ("STM32.*",                 FlashInfo{ erase_value: 0xFF, write_size:  8, erase_size: &[(  2*1024, 0)] }),
 ]);
 
-pub fn get(chip: &str) -> Vec<Memory> {
-    let mems = *MEMS.must_get(chip);
-    let flash = FLASH_INFO.must_get(chip);
+pub fn get(chip: &str) -> Option<Vec<Memory>> {
+    let mems = *MEMS.get(chip)?;
+    let flash = FLASH_INFO.get(chip)?;
 
     let mut res = Vec::new();
 
@@ -424,5 +424,5 @@ pub fn get(chip: &str) -> Vec<Memory> {
 
     res.sort_by_key(|m| (m.address, m.name.clone()));
 
-    res
+    Some(res)
 }
