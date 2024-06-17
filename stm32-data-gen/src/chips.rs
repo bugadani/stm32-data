@@ -805,7 +805,7 @@ fn process_chip(
         die: group.die.clone().unwrap(),
         device_id: u16::from_str_radix(&group.die.as_ref().unwrap()[3..], 16).unwrap(),
         packages: chip.packages.clone(),
-        memory: memory::get(chip_name),
+        memory: memory::get(chip_name).unwrap(),
         docs,
         cores: cores.to_vec(),
     };
